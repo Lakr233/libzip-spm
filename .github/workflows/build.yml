@@ -26,17 +26,15 @@ jobs:
             exit 0
           fi
 
+          ORIG_LIB_TAG=$LIB_TAG
+          LIB_TAG=$(echo $LIB_TAG | cut -c 2-)
+
           MAJOR_VERSION=$(echo $LIB_TAG | cut -d'-' -f2 | cut -d'.' -f1)
           MINOR_VERSION=$(echo $LIB_TAG | cut -d'-' -f2 | cut -d'.' -f2)
           PATCH_VERSION=$(echo $LIB_TAG | cut -d'-' -f2 | cut -d'.' -f3)
           echo "[*] tag validated, major: $MAJOR_VERSION, minor: $MINOR_VERSION, patch: $PATCH_VERSION"
 
-          if [ $MAJOR_VERSION -lt 3 ]; then
-            echo "[*] invalid release tag, skip pipeline: $LIB_TAG, major version must be >= 3"
-            exit 0
-          fi
-
-          BUILD_TAG=$LIB_TAG
+          BUILD_TAG=$ORIG_LIB_TAG
           echo "BUILD_TAG=$BUILD_TAG" >> $GITHUB_ENV
           RELEASE_TAG="$MAJOR_VERSION.$MINOR_VERSION.$PATCH_VERSION"
           echo "RELEASE_TAG=$RELEASE_TAG" >> $GITHUB_ENV
