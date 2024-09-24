@@ -1,0 +1,21 @@
+// swift-tools-version:5.6
+// The swift-tools-version declares the minimum version of Swift required to build this package.
+
+import PackageDescription
+
+let package = Package(
+    name: "libzip-spm",
+    products: [
+        .library(name: "zip", targets: ["zip"]),
+    ],
+    targets: [
+        .target(name: "zip", dependencies: [
+            "czip",
+        ]),
+        .binaryTarget(
+            name: "czip",
+            url: "__DOWNLOAD_URL__",
+            checksum: "__CHECKSUM__"
+        ),
+    ]
+)
