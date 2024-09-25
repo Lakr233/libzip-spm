@@ -9,9 +9,15 @@ let package = Package(
         .library(name: "zip", targets: ["zip"]),
     ],
     targets: [
-        .target(name: "zip", dependencies: [
-            "czip",
-        ]),
+        .target(
+            name: "zip",
+            dependencies: [
+                "czip",
+            ],
+            linkerSettings: [
+                .linkedLibrary("z"),
+            ]
+        ),
         .binaryTarget(
             name: "czip",
             url: "https://github.com/Lakr233/libzip-spm/releases/download/storage.1.11.1/libzip.xcframework.zip",
