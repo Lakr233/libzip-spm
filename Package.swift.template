@@ -9,9 +9,16 @@ let package = Package(
         .library(name: "zip", targets: ["zip"]),
     ],
     targets: [
-        .target(name: "zip", dependencies: [
-            "czip",
-        ]),
+        .target(
+            name: "zip",
+            dependencies: [
+                "czip",
+            ],
+            linkerSettings: [
+                .linkedLibrary("z"),
+                .linkedLibrary("bz2"),
+            ]
+        ),
         .binaryTarget(
             name: "czip",
             url: "__DOWNLOAD_URL__",
