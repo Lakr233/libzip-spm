@@ -21,8 +21,8 @@ let package = Package(
         ),
         .binaryTarget(
             name: "czip",
-            url: "https://github.com/Lakr233/libzip-spm/releases/download/storage.1.11.3/libzip.xcframework.zip",
-            checksum: "bc5e0cb40dddba91529573ee3ef1f3c7a9506e601c7e99727efa0437f697cd22"
+            url: "https://github.com/Lakr233/libzip-spm/releases/download/storage.1.11.4/libzip.xcframework.zip",
+            checksum: "86b80255bdaedcfede9ad4e232f14dc1ff03b5abde444dcc5b91866cd2bf7a2b"
         ),
     ]
 )

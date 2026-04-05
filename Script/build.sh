@@ -25,7 +25,7 @@ if [ -n "$2" ]; then
     DOWNLOAD_URL=$2
 else
     DEFAULT_REPO_SLUG="${LIBZIP_SPM_REPO_SLUG:-Lakr233/libzip-spm}"
-    REPO_SLUG=$(git config --get remote.origin.url | sed -E 's#(git@github.com:|https://github.com/|git://github.com/)([^/?]+/[^/.?]+)(\\.git)?/?(\\?.*)?$#\\2#')
+    REPO_SLUG=$(git config --get remote.origin.url | sed -E 's#(git@github.com:|https://github.com/|git://github.com/)([^/?]+/[^/.?]+)(\.git)?/?(\?.*)?$#\2#')
     if [ -z "$REPO_SLUG" ]; then
         REPO_SLUG="$DEFAULT_REPO_SLUG"
         echo "[*] warning: failed to determine remote.origin.url, defaulting manifest download repo to $REPO_SLUG"
@@ -39,7 +39,7 @@ XCFRAMEWORK_PATH_ZIP="$(pwd)/build/libzip.xcframework.zip"
 mkdir -p "$(dirname "$XCFRAMEWORK_PATH_ZIP")"
 echo "[*] output: $XCFRAMEWORK_PATH_ZIP"
 
-./Script/build-xcframework.sh $LIB_TAG $XCFRAMEWORK_PATH_ZIP
-./Script/build-manifest.sh $XCFRAMEWORK_PATH_ZIP $DOWNLOAD_URL
+./Script/build-xcframework.sh "$LIB_TAG" "$XCFRAMEWORK_PATH_ZIP"
+./Script/build-manifest.sh "$XCFRAMEWORK_PATH_ZIP" "$DOWNLOAD_URL"
 
 echo "[*] done $(basename $0)"
