@@ -7,10 +7,15 @@ on:
 
 jobs:
   fetch-and-release:
-    runs-on: macos-14
+    runs-on: macos-15
     steps:
       - name: Checkout Source Code
         uses: actions/checkout@v4.1.1
+
+      - name: Setup Xcode
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
 
       - name: Determine Release Tag
         run: |
@@ -31,7 +36,7 @@ jobs:
           PATCH_VERSION=$(echo $LIB_TAG | cut -d'v' -f2 | cut -d'.' -f3)
           echo "[*] tag validated, major: $MAJOR_VERSION, minor: $MINOR_VERSION, patch: $PATCH_VERSION"
 
-          BUILD_TAG=$ORIG_LIB_TAG
+          BUILD_TAG=$LIB_TAG
           echo "BUILD_TAG=$BUILD_TAG" >> $GITHUB_ENV
           RELEASE_TAG="$MAJOR_VERSION.$MINOR_VERSION.$PATCH_VERSION"
           echo "RELEASE_TAG=$RELEASE_TAG" >> $GITHUB_ENV
@@ -57,9 +62,6 @@ jobs:
           uname -a
           echo "[*] installing dependencies..."
           brew install libtool autoconf automake pkgconfig coreutils bash zip swiftformat
-          echo "[*] switching xcode version..."
-          sudo xcode-select -s /Applications/Xcode_15.2.app
-          xcode-select -p
           xcodebuild -version
           echo "[*] preparing xcode..."
           xcodebuild -downloadAllPlatforms

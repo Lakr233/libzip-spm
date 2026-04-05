@@ -12,6 +12,11 @@ fi
 XCFRAMEWORK_PATH_ZIP=$1
 DOWNLOAD_URL=$2
 
+if [ -z "$XCFRAMEWORK_PATH_ZIP" ] || [ -z "$DOWNLOAD_URL" ]; then
+    echo "Usage: $0 <xcframework_zip> <download_url>"
+    exit 1
+fi
+
 if [ ! -f "$XCFRAMEWORK_PATH_ZIP" ]; then
     echo "[*] $XCFRAMEWORK_PATH_ZIP not found"
     exit 1
