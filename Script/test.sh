@@ -3,7 +3,7 @@
 cd "$(dirname "$0")"
 cd ..
 
-SCEHEME="zip"
+SCEHEME="libzip-spm"
 
 function test_build() {
     DESTINATION=$1
