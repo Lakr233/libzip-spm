@@ -85,11 +85,14 @@ jobs:
           ./Script/build-manifest.sh libzip.xcframework.zip $EST_XCFRAMEWORK_DOWNLOAD_URL
 
       - name: Commit & Push changes
-        uses: actions-js/push@master
         if: env.UPDATE_NEEDED == 'true'
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          tags: true
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "chore: autopublish $(date -u +%Y-%m-%dT%H:%M:%SZ)" || echo "No changes to commit"
+          git push
+          git push --tags
 
       - name: Make Storage Release
         if: env.UPDATE_NEEDED == 'true'
@@ -114,6 +117,3 @@ jobs:
             This release was made by automation.
           draft: false
           prerelease: false
-
-      - name: Keepalive Workflow
-        uses: gautamkrishnar/keepalive-workflow@v2
